@@ -1,8 +1,9 @@
 import { createApp, defineAsyncComponent } from 'vue';
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 import router from './router';
 import App from './App';
-import store from './store';
 import BaseCard from './components/ui/BaseCard';
 import BaseButton from './components/ui/BaseButton';
 import BaseBadge from './components/ui/BaseBadge';
@@ -14,7 +15,7 @@ const BaseDialog = defineAsyncComponent(()=>import('./components/ui/BaseDialog')
 const app = createApp(App);
 
 app.use(router);
-app.use(store);
+app.use(VueAxios, axios);
 
 app.component('base-card', BaseCard)
 app.component('base-button', BaseButton)

@@ -15,7 +15,3 @@
     components: { BaseCard }
   }
 </script>
-
-<style scoped>
-
-</style>

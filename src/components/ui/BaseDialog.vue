@@ -60,7 +60,6 @@
         background-color: rgba(0, 0, 0, 0.75);
         z-index: 10;
     }
-
     dialog {
         position: fixed;
         top: 20vh;
@@ -75,49 +74,40 @@
         overflow: hidden;
         background-color: white;
     }
-
     header {
         background-color: #3a0061;
         color: white;
         width: 100%;
         padding: 1rem;
     }
-
     header h2 {
         margin: 0;
     }
-
     section {
         padding: 1rem;
     }
-
     menu {
         padding: 1rem;
         display: flex;
         justify-content: flex-end;
         margin: 0;
     }
-
     .dialog-enter-from,
     .dialog-leave-to {
         opacity: 0;
         transform: scale(.8);
     }
-
     .dialog-enter-active {
         transition: .3s ease-out;
     }
-
     .dialog-leave-active {
         transition: .3s ease-in;
     }
-
     .dialog-enter-to,
     .dialog-leave-from {
         opacity: 1;
         transform: scale(1);
     }
-
     @media (min-width: 768px) {
         dialog {
             left: calc(50% - 20rem);

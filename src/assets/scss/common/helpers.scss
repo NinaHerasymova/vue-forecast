@@ -1,0 +1,10 @@
+a{
+  text-decoration: none;
+  color: $white;
+  &:active,
+  &:hover,
+  &.router-link-active {
+    color: $yellow;
+    transition: color .3s ease-in-out;
+  }
+}

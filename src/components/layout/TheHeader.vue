@@ -1,21 +1,19 @@
 <template>
-    <header>
-        <nav>
-            <h1>
-                <router-link to="/">Find a coach</router-link>
-            </h1>
-            <ul>
+    <header class="header">
+        <nav class="header__nav">
+            <div class="header__logo">
+                <router-link class="header__logo-link" to="/">
+                    <img class="header__logo-img" src="@/assets/images/sun.png"/>
+                    <h1 class="header__logo-title">RealForecast</h1>
+                </router-link>
+            </div>
+            <ul class="header__menu">
+                <li class="header__menu-item">
+                    <router-link class="header__menu-link" to="/daily" v-text="'Daily'"/>
+                </li>
+
                 <li>
-                    <router-link to="/coaches">All coaches</router-link>
-                </li>
-                <li v-if="isLogged">
-                    <router-link to="/requests">Requests</router-link>
-                </li>
-                <li v-else>
-                    <router-link to="/auth">Log in</router-link>
-                </li>
-                <li v-if="isLogged">
-                    <base-button @click="logOut">Log out</base-button>
+                    <router-link class="header__menu-link" to="/week" v-text="'Week'"/>
                 </li>
             </ul>
         </nav>
@@ -25,78 +23,56 @@
 <script>
   export default {
     name: 'TheHeader',
-    computed:{
-      isLogged(){
-        return this.$store.getters.isAuthentificated
-      }
-    },
-    methods:{
-      logOut(){
-        this.$store.dispatch('logOut')
-        this.$router.replace('/coaches');
-      }
-    }
   };
 </script>
 
-<style scoped>
-    header {
+<style lang="scss" scoped>
+    .header {
         width: 100%;
         height: 5rem;
-        background-color: #3d008d;
+        background-color: $green;
         display: flex;
         justify-content: center;
         align-items: center;
-    }
 
-    header a {
-        text-decoration: none;
-        color: #f391e3;
-        display: inline-block;
-        padding: 0.75rem 1.5rem;
-        border: 1px solid transparent;
-    }
+        &__nav {
+            width: 90%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    a:active,
-    a:hover,
-    a.router-link-active {
-        border: 1px solid #f391e3;
-    }
+        &__logo-link {
+            display: flex;
+            align-items: center;
+        }
 
-    h1 {
-        margin: 0;
-    }
+        &__logo-title {
+            margin: 0;
+            color: $white;
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid transparent;
+        }
 
-    h1 a {
-        color: white;
-        margin: 0;
-    }
+        &__logo-img{
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+        &__menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    h1 a:hover,
-    h1 a:active,
-    h1 a.router-link-active {
-        border-color: transparent;
-    }
-
-    header nav {
-        width: 90%;
-        margin: auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    header ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    li {
-        margin: 0 0.5rem;
+        &__menu-item {
+            margin: 0 0.5rem;
+        }
     }
 
 </style>
