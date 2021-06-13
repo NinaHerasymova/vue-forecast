@@ -13,7 +13,14 @@
                 <span v-text="getDate.month"/>
             </div>
             <div class="result__info-wrapper">
-                <div class="result__degrees">{{getIntegerDegrees}} &#176;C</div>
+                <div class="result__degrees">
+                    <span class="result__cur-temp">{{currentTemp}} &#176;C</span>
+                    <div class="result__vars">
+                        <span class="result__add-temp" v-if="modifier!=='week'">Feels like {{feelTemp}}&#176;C</span>
+                        <span class="result__add-temp" v-if="modifier==='week'">{{mornTemp}}&#176;C</span>
+                        <span class="result__add-temp" v-if="modifier==='week'">{{nightTemp}}&#176;C</span>
+                    </div>
+                </div>
                 <img :src="`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`" alt="">
                 <div class="result__state" v-text="day.weather[0].main"/>
             </div>
@@ -28,9 +35,24 @@
   export default {
     name: 'DailyResult',
     props: ['day', 'modifier'],
+    methods: {
+      getIntegerDegree(temp) {
+        return Math.round(temp)
+      }
+    },
     computed: {
-      getIntegerDegrees() {
-        return Math.round(this.day.temp.day)
+      currentTemp() {
+        const temp = this.day.temp.day ?? this.day.temp
+        return this.getIntegerDegree(temp)
+      },
+      mornTemp() {
+        return this.getIntegerDegree(this.day.temp.morn)
+      },
+      nightTemp() {
+        return this.getIntegerDegree(this.day.temp.night)
+      },
+      feelTemp() {
+        return this.getIntegerDegree(this.day.feels_like)
       },
       getDate() {
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -114,15 +136,38 @@
             font-weight: 800;
 
             .result--week & {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
                 padding: 0.5rem;
                 font-size: 25px;
-                @include md{
-                    display: flex;
+                @include md {
+                    padding: 0.5rem 1rem;
                     align-items: center;
                     justify-content: center;
-                    min-width: 100px;
+                    flex-direction: row;
+                    min-width: 150px;
                 }
             }
+        }
+
+        &__vars {
+            display: flex;
+            justify-content: space-between;
+            width: 70%;
+            margin: 0 auto;
+            @include md {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+        }
+
+        &__cur-temp {
+            flex-shrink: 0;
+        }
+
+        &__add-temp {
+            font-size: 12px;
         }
 
         &__state {
@@ -131,11 +176,15 @@
 
             .result--week & {
                 font-size: 12px;
-                @include md{
+                @include md {
                     display: flex;
                     align-items: center;
                     font-size: 16px;
                     font-weight: 800;
+                    min-width: 150px;
+                }
+                @include sm{
+                    min-width: 80px;
                 }
             }
         }

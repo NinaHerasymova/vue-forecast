@@ -1,44 +1,32 @@
 <template>
         <section class="daily container">
             <div class="daily__inner inner">
-                <city-field @setCity="setCity"/>
-                <daily-result v-if=info&&!emptyField :info="info"/>
-                <error-message v-else-if="!info&&!emptyField" :errors="errors"/>
+                <city-field/>
+                <h2 class="daily__title title" v-if="location.name&&location.country&&!errors">{{location.name}},{{location.country}}</h2>
+                <day-result v-if=info.current&&!errors :day="info.current"/>
+                <error-message v-else :errors="errors"/>
             </div>
         </section>
 </template>
 
 <script>
 
-  import DailyResult from "../../components/common/DailyResult";
+    import {mapGetters} from 'vuex'
+
+  import DayResult from "../../components/common/DayResult";
   import ErrorMessage from "../../components/common/ErrorMessage";
   import CityField from "../../components/common/CityField";
 
   export default {
     name: 'DailyForecast',
-    components: {DailyResult, ErrorMessage, CityField},
-    data() {
-      return {
-        info: null,
-        errors: null,
-        emptyField: false
-      };
-    },
-    methods: {
-      setCity(cityName, emptyField) {
-        this.emptyField = emptyField
-        if (cityName) {
-          this.errors = null
-          const city = cityName.replace(/ /ig, '+')
-
-          this.$store.dispatch('setCity', city);
-          this.axios
-          .get(`http://api.openweathermap.org/data/2.5/weather?q=${this.$store.getters.getCity}&appid=6f0a1b5a6791d33a1557b49542c3e112&units=metric`)
-          .then(response => this.info = response.data)
-          .catch(res => res.response.status === 404 ? this.errors = 'Something went wrong! Let`s try one more time:)' : null);
-        }
-      }
-    },
+    components: { CityField, DayResult, ErrorMessage},
+    computed:{
+      ...mapGetters({
+        info:'getForecast',
+        location: 'getLocation',
+        errors: 'getErrors'
+      })
+    }
   };
 </script>
 
