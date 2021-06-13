@@ -3,6 +3,7 @@
   width: 100%;
   margin: 0 auto;
   padding: 0 15px;
+
 }
 
 .container{
@@ -10,4 +11,7 @@
   width: 100%;
   margin: 0 auto;
   padding: 0 15px;
+  @include xs{
+    padding: 0;
+  }
 }

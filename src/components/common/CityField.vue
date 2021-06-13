@@ -1,9 +1,14 @@
 <template>
     <div class="city-field">
-        <div class="city-field__controls">
+        <div class="city-field__panel">
             <label class="city-field__label" for="city">Enter the city: </label>
-            <input class="city-field__input" v-model="location.cityName" type="text" id="city">
-            <base-button @click="setCity" v-text="'Get'"/>
+            <div class="city-field__controls">
+                <input class="city-field__input"
+                       v-model.trim="location.cityName"
+                       type="text"
+                       id="city">
+                <base-button @click="setCity" v-text="'Get'"/>
+            </div>
         </div>
         <p class="error" v-if="emptyField">Enter some city name, please</p>
     </div>
@@ -34,9 +39,9 @@
           this.$store.commit('setError', '');
 
           this.axios
-          .get(`http://api.openweathermap.org/geo/1.0/direct?q=${this.$store.getters.getCity}&limit=1&appid=6f0a1b5a6791d33a1557b49542c3e112`)
+          .get(`https://api.openweathermap.org/geo/1.0/direct?q=${this.$store.getters.getCity}&limit=1&appid=6f0a1b5a6791d33a1557b49542c3e112`)
           .then(response => {
-            if (response.data.length===0) {
+            if (response.data.length === 0) {
               this.$store.commit('setError', 'It seems you entered your imaginary city) Let`s try one more time)')
             }
             this.lat = response.data[0].lat;
@@ -50,14 +55,14 @@
             .then(response => this.$store.dispatch('setForecast', response.data))
             .catch(res => {
 
-              if(res.response.status === 404){
+              if (res.response.status === 404) {
 
                 this.$store.commit('setError', 'Something went wrong! Let`s try one more time:)');
               }
             })
           })
           .catch(res => {
-            if(res.response.status === 404){
+            if (res.response.status === 404) {
               this.$store.commit('setError', 'Something went wrong! Let`s try one more time:)');
             }
           });
@@ -78,23 +83,30 @@
         flex-direction: column;
         margin-top: 20px;
 
-        &__controls {
+        &__panel {
             width: 100%;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             @include sm {
-                flex-wrap: wrap;
+                flex-direction: column;
             }
         }
 
         &__label {
+            flex-shrink: 0;
             @include sm {
                 width: 100%;
                 text-align: center;
                 margin-bottom: 10px;
             }
+        }
+
+        &__controls {
+            width: 100%;
+            display: flex;
+            flex-grow: 1;
         }
 
         &__input {
@@ -110,13 +122,8 @@
 
             @include sm {
                 margin: 0 10px 0 0;
-                min-width: 190px;
             }
 
-            @include xs {
-                margin: 0;
-                flex-grow: unset;
-            }
         }
     }
 </style>
