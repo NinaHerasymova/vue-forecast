@@ -17,7 +17,7 @@
   };
 </script>
 
-<style>
+<style lang="scss">
     @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
     * {
         box-sizing: border-box;
@@ -27,6 +27,7 @@
     }
     body {
         margin: 0;
+        background-color: $lightGreen;
     }
     .route-enter-from {
         opacity: 0;

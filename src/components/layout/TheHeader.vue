@@ -1,22 +1,24 @@
 <template>
     <header class="header">
-        <nav class="header__nav">
-            <div class="header__logo">
-                <router-link class="header__logo-link" to="/">
-                    <img class="header__logo-img" src="@/assets/images/sun.png"/>
-                    <h1 class="header__logo-title">RealForecast</h1>
-                </router-link>
-            </div>
-            <ul class="header__menu">
-                <li class="header__menu-item">
-                    <router-link class="header__menu-link" to="/daily" v-text="'Daily'"/>
-                </li>
+        <div class="header__inner inner">
+            <nav class="header__nav">
+                <div class="header__logo">
+                    <router-link class="header__logo-link" to="/">
+                        <img class="header__logo-img" src="@/assets/images/sun.png"/>
+                        <h1 class="header__logo-title">RealForecast</h1>
+                    </router-link>
+                </div>
+                <ul class="header__menu">
+                    <li class="header__menu-item">
+                        <router-link class="header__menu-link" to="/daily" v-text="'Daily'"/>
+                    </li>
 
-                <li>
-                    <router-link class="header__menu-link" to="/week" v-text="'Week'"/>
-                </li>
-            </ul>
-        </nav>
+                    <li>
+                        <router-link class="header__menu-link" to="/week" v-text="'Week'"/>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </header>
 </template>
 
@@ -35,8 +37,14 @@
         justify-content: center;
         align-items: center;
 
+        &__inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         &__nav {
-            width: 90%;
+            width: 100%;
             margin: auto;
             display: flex;
             justify-content: space-between;
@@ -54,13 +62,17 @@
             display: inline-block;
             padding: 0.75rem 1.5rem;
             border: 1px solid transparent;
+            @include sm {
+                padding: 0.75rem .5rem;
+            }
         }
 
-        &__logo-img{
+        &__logo-img {
             width: 40px;
             height: 40px;
             object-fit: cover;
         }
+
         &__menu {
             list-style: none;
             margin: 0;
@@ -71,7 +83,7 @@
         }
 
         &__menu-item {
-            margin: 0 0.5rem;
+            margin: 0 1rem;
         }
     }
 
