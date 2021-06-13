@@ -80,10 +80,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            @include xs{
+                flex-direction: column;
+            }
         }
 
         &__menu-item {
             margin: 0 1rem;
+            @include xs{
+                margin: .5rem 0;
+            }
         }
     }
 
